@@ -20,8 +20,9 @@ void Prim(int V, lst* adj_ar[V], lst* adj_ar_res[V]){
         tmp=tmp->next;
     }
     
-    for(i=1;i<V,p[i]==-1;i++)
-        push(i,d[i]);
+    for(i=1;i<V;i++)
+        if(p[i]==-1)
+            push(i,d[i]);
 
     while(!is_empty()){
         v1=extract_min();
@@ -33,7 +34,7 @@ void Prim(int V, lst* adj_ar[V], lst* adj_ar_res[V]){
         adj_ar_res[p[v1]]->next=new;
         
         tmp=adj_ar[v1];
-        while(tmp->next!=NULL)&&(in_queue(tmp->v))&&(d[tmp->v]>(tmp->weight)){
+        while((tmp!=NULL)&&(d[tmp->v]>(tmp->weight))&&(in_queue(tmp->v))){
             d[tmp->v]=tmp->weight;
             p[tmp->v]=v1;
             tmp=tmp->next;

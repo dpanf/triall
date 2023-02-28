@@ -28,8 +28,8 @@ int main()
     scanf("%lf", &eps);
     if((f(a)==0)||(f(b)==0)){
         n=0; delta=b-a;
-        if(f(a)==0) x= a;
-        else x= b;
+        if(f(a)==0) x=a;
+        else x=b;
     }
     else x=solver1(f,a,b,1e-5,&delta,&n);
     return 0;
