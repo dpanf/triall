@@ -1,17 +1,45 @@
-void adj_list2yale_ars(int V, adj_l_el *adj_l_mat[V], int *v_ar[V], int **e_ar){
-    int i,j=0,k=0, size=V*V;
-    adj_l_el *tmp;
-    int *edge_ar2=(int*)malloc(size*sizeof(int));
-    for(i=0;i<V;i++){
-        tmp=adj_l_mat[i];
-        v_ar[i]=k;
-        while(tmp){
-            if(k>=size)
-                edge_ar2=realloc(edge_ar2, (size=size*2)*sizeof(int));
-            edge_ar2[k++]=tmp->v;
-            tmp=tmp->next;
-        }
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node{
+    int val;
+    struct node *left,*right;
+}node;
+
+node *insrt(int x, node *tree){
+    if(tree==NULL){
+        tree=(node*)malloc(sizeof(node));
+        tree->val=x;
+        tree->left=NULL;
+        tree->right=NULL;
     }
-    e_ar=realloc(edge_ar2, k*sizeof(int));
-    return;
+    else
+        if(x<(tree->val))
+            tree->left=insrt(x,tree->left);
+        else if(x==(tree->val)) return NULL;
+            else tree->right=insrt(x,tree->right);
+    return tree;
+}
+
+int height(node *tree){
+    if(!tree) return 0;
+    if(height(tree->left)>height(tree->right))
+        return 1+height(tree->left);
+    else
+        return 1+height(tree->right);
+}
+
+int main()
+{
+    int n,k=0;
+    node *tree=malloc(sizeof(node));
+    scanf("%d", &n);
+    tree->val=n;
+    while(n!=0){
+        scanf("%d", &n);
+        insrt(n,tree);
+    }
+    //printf("%d %d %d\n", tree->val, (tree->left)->val, tree->right->val);
+    printf("%d", height(tree)-1);
+    return 0;
 }
